@@ -1,0 +1,165 @@
+from random import *
+#define a class for gelatinous creatures
+class Gelatinous:
+    def __init__(self):
+        self.limbnum = None
+        self.limbs = None
+        self.color = None
+        self.feature = None
+
+        self.set_limbnum()
+        self.set_limb()
+        self.set_color()
+        self.set_feature()
+    #give a random number of limbs
+    def set_limbnum(self):
+        self.limbnum = str(randint(1,30))
+    #choose a random limb type
+    def set_limb(self):
+        limb = ['suckered tentacles', 'stinging tentacles', 'human like arms', 'a   morphous limbs' 'no limbs']
+        self.limb = limb[randint(0, len(limb)-1)]
+        if self.limb == 'no limbs':
+            self.limbnum = 0
+    #choose a random color
+    def set_color(self):
+        color = ['purple', 'iridescent', 'reflective', 'sludge black' 'ochre yellow', 'pale cyan', 'red', 'green', 'color changing', 'chamealeonic', 'translucent']
+        self.color = color[randint(0, len(color)-1)]
+    #choose a random additional feature for the creature
+    def set_feature(self):
+        featu = ['is psychically active', 'can dissolve most matter', 'defies gravity', 'can phase in and out of reality', 'can change its size at will', 'is impervious to physical damage']
+        self.feature = featu[randint(0, len(featu)-1)]
+#define a class for reptilian creatures
+class Reptilian:
+    def __init__(self):
+        self.head = None
+        self.locamotion = None
+        self.limb = None
+        self.skin = None
+        self.tail = None
+        self.extra = None
+
+        self.set_head()
+        self.set_locamotion()
+        self.set_limb()
+        self.set_skin()
+        self.set_tail()
+        self.set_extra()
+    #generate a random head type
+    def set_head(self):
+        head = ['snake like', 'frilled', 'spined', 'horned','diamond shaped', 'long snouted', 'knobbed', 'alligator jaw', 'ridged']
+        self.head = head[randint(0, len(head))-1]
+    #determine whether the creatures form of locamotion
+    def set_locamotion(self):
+        locamotion = ['bipedal', 'bipedal', 'quadrapedal', 'quadrapedal','two limbed', 'no limbs']
+        self.locamotion = locamotion[randint(0,5)]
+    #determine the characteristics of its limbs according to what would make sense give its form of locamotion
+    def set_limb(self):
+
+        lengthlimb = ['short', 'long', '', '']
+        leg_length = lengthlimb[randint(0, len(lengthlimb)-1)]
+        arm_length = lengthlimb[randint(0, len(lengthlimb)-1)]
+        widthlimb = ['thin', 'thick', '', '']
+        leg_width = widthlimb[randint(0, len(widthlimb)-1)]
+        arm_width = widthlimb[randint(0, len(widthlimb) - 1)]
+        feet = ['webbed feet', ' clawed feet', 'three toed feet', 'hooved feet', 'two toed feet']
+        feet = feet[randint(0, len(feet)-1)]
+        hands = ['Clawed hands', ' webbed hands', 'three toed hands', 'two toed hands', 'tentacle hands']
+        hands = hands[randint(0, len(hands)-1)]
+
+        if self.locamotion == 'bipedal':
+            self.limb = 'two %s %s arms with %s and two %s %s legs with %s'%(arm_length, arm_width, hands, leg_length, leg_width, feet)
+        elif self.locamotion == 'quadrapedal':
+            self.limb = 'four %s %s legs with %s'%(leg_length, leg_width, feet)
+        elif self.locamotion == 'two limbed':
+            limbtype = [randint(0,1)]
+            if limbtype == 0:
+                self.limb = 'two %s %s arms with %s and no legs'%(arm_length, arm_width, hands)
+            else:
+                self.limb = 'two %s %s legs with %s and no arms'%(leg_length, leg_width, feet)
+        elif self.locamotion == 'no limbs':
+            self.limb = 'with no limbs'
+
+    def set_skin(self):
+        skin_color = ['dull copper', 'bright bronze', 'muted green', 'speckled orange', 'desert khaki', 'rust red', 'bright green', 'rainbow colored']
+        skin_color = skin_color[randint(0, len(skin_color)-1)]
+        skin_type = ['small flat scales', 'small ridged scales', 'large flat scales', 'large ridged scales', 'thick scutes', 'feathers']
+        skin_type = skin_type[randint(0, len(skin_type)-1)]
+        self.skin = skin_color + ' ' + skin_type
+
+    def set_tail(self):
+        tail = ['spined', 'barbed', 'ridged', 'bifurcated', 'muscular', 'thin', 'smooth', 'no', 'stub']
+        self.tail = tail[randint(0, len(tail)-1)]
+
+    def set_extra(self):
+        extra = ['psychic powers', 'acid spit', 'venomous', 'invisibility', 'wings', 'night vision', 'shapeshifting', 'suspended animation', 'hive mind', 'teleportation', 'burrows', ]
+        ifextra = randint(0, 7)
+        if ifextra >= 3:
+            self.extra = extra[randint(0, len(extra)-1)]
+        else:
+            self.extra = 'no extraordinary ability'
+
+class Mammalian:
+    def __init__(self):
+        self.head = None
+        self.body = None
+        self.locamotion = None
+        self.limb = None
+        self.tail = None
+        self.extra = None
+
+        self.set_head()
+        self.set_body()
+        self.set_locamotion()
+        self.set_limb()
+        self.set_tail()
+        self.set_extra()
+
+    def set_head(self):
+        head = ['horse head', 'monkey head', 'goat head', 'cat head', 'dog head', 'wolf head', 'ape head', 'deer head','cat head', 'pig snout']
+        self.head = head[randint(0, len(head)-1)]
+
+    def set_body(self):
+        body = ['fur','skin']
+        body = body[randint(0,1)]
+        fur = ['black', 'brown', 'calico', 'brown speckled', 'golden', 'white', 'orange', 'leapord print', 'tabby', 'tuxedo']
+        fur = fur[randint(0, len(fur)-1)]
+        skin = ['white', 'albino', 'tan', 'black', 'olive',]
+        skin = skin[randint(0, len(skin)-1)]
+        if body == 'fur':
+            self.body = fur + body
+        else:
+            self.body = skin + body
+
+    def set_locamotion(self):
+        locamotion = randint(0, 1)
+        if locamotion == 0:
+            self.locamotion = 'bipedal'
+        else:
+            self.locamtion = 'quadrapedal'
+
+    def set_limb(self):
+        lengthlimb = ['short', 'long', '', '']
+        leg_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
+        arm_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
+        widthlimb = ['thin', 'thick', '', '']
+        leg_width = widthlimb[randint(0, len(widthlimb) - 1)]
+        arm_width = widthlimb[randint(0, len(widthlimb) - 1)]
+        feet = ['webbed feet', ' clawed feet', 'three toed feet', 'hooved feet', 'two toed feet', 'goat feet', 'dog feet', 'large paws', ' five toed feet']
+        feet = feet[randint(0, len(feet) - 1)]
+        hands = ['clawed hands', ' webbed hands', 'three toed hands', 'two toed hands', 'tentacle hands', 'clawed paws', 'claws', 'five fingered hands']
+        hands = hands[randint(0, len(hands) - 1)]
+        if self.locamotion == 'bipedal':
+            self.limb = 'two %s %s arms with %s and two %s %s legs with %s'%(arm_length, arm_width, hands, leg_length, leg_width, feet)
+        else:
+            self.limb = 'four %s %s legs with %s'%(leg_length, leg_width, feet)
+
+    def set_tail(self):
+        tail = [, 'short', 'prehensile', 'vestigial', 'feline', 'cork screw', 'scaled', 'rat like', 'canine', 'striped', 'barbed']
+        tail_chance = randint(1,10)
+        if tail_chance > 4:
+            self.tail = tail[randint(0, len(tail)-1)]
+        else:
+            self.tail = 'no'
+
+    def set_extra(self):
+        extra = ['psychically active']
