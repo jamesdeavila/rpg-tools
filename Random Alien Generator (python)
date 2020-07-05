@@ -1,4 +1,14 @@
 from random import *
+
+def set_limblengths():
+    global arm_length, leg_length, arm_width, leg_width
+    lengthlimb = ['short', 'long', '', '']
+    leg_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
+    arm_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
+    widthlimb = ['thin', 'thick', '', '']
+    leg_width = widthlimb[randint(0, len(widthlimb) - 1)]
+    arm_width = widthlimb[randint(0, len(widthlimb) - 1)]
+
 #define a class for gelatinous creatures
 class Gelatinous:
     def __init__(self):
@@ -10,7 +20,7 @@ class Gelatinous:
         self.set_limbnum()
         self.set_limb()
         self.set_color()
-        self.set_feature()
+        self.set_extra()
     #give a random number of limbs
     def set_limbnum(self):
         self.limbnum = str(randint(1,30))
@@ -25,11 +35,12 @@ class Gelatinous:
         color = ['purple', 'iridescent', 'reflective', 'sludge black' 'ochre yellow', 'pale cyan', 'red', 'green', 'color changing', 'chamealeonic', 'translucent']
         self.color = color[randint(0, len(color)-1)]
     #choose a random additional feature for the creature
-    def set_feature(self):
-        featu = ['is psychically active', 'can dissolve most matter', 'defies gravity', 'can phase in and out of reality', 'can change its size at will', 'is impervious to physical damage']
-        self.feature = featu[randint(0, len(featu)-1)]
+    def set_extra(self):
+        featu = ['psionic', 'can dissolve most matter', 'defies gravity', 'can phase in and out of reality', 'can change its size at will', 'is impervious to physical damage']
+        self.extra = featu[randint(0, len(featu)-1)]
+
 #define a class for reptilian creatures
-class Reptilian:
+class Reptile:
     def __init__(self):
         self.head = None
         self.locamotion = None
@@ -44,6 +55,7 @@ class Reptilian:
         self.set_skin()
         self.set_tail()
         self.set_extra()
+
     #generate a random head type
     def set_head(self):
         head = ['snake like', 'frilled', 'spined', 'horned','diamond shaped', 'long snouted', 'knobbed', 'alligator jaw', 'ridged']
@@ -54,13 +66,7 @@ class Reptilian:
         self.locamotion = locamotion[randint(0,5)]
     #determine the characteristics of its limbs according to what would make sense give its form of locamotion
     def set_limb(self):
-
-        lengthlimb = ['short', 'long', '', '']
-        leg_length = lengthlimb[randint(0, len(lengthlimb)-1)]
-        arm_length = lengthlimb[randint(0, len(lengthlimb)-1)]
-        widthlimb = ['thin', 'thick', '', '']
-        leg_width = widthlimb[randint(0, len(widthlimb)-1)]
-        arm_width = widthlimb[randint(0, len(widthlimb) - 1)]
+        set_limblengths()
         feet = ['webbed feet', ' clawed feet', 'three toed feet', 'hooved feet', 'two toed feet']
         feet = feet[randint(0, len(feet)-1)]
         hands = ['Clawed hands', ' webbed hands', 'three toed hands', 'two toed hands', 'tentacle hands']
@@ -91,14 +97,14 @@ class Reptilian:
         self.tail = tail[randint(0, len(tail)-1)]
 
     def set_extra(self):
-        extra = ['psychic powers', 'acid spit', 'venomous', 'invisibility', 'wings', 'night vision', 'shapeshifting', 'suspended animation', 'hive mind', 'teleportation', 'burrows', ]
+        extra = ['psionic', 'acid spit', 'venomous', 'invisibility', 'wings', 'night vision', 'shapeshifting', 'suspended animation', 'hive mind', 'teleportation', 'burrows', 'prehensile tongue', 'regeneration', 'fire breathing']
         ifextra = randint(0, 7)
         if ifextra >= 3:
             self.extra = extra[randint(0, len(extra)-1)]
         else:
             self.extra = 'no extraordinary ability'
 
-class Mammalian:
+class Mammal:
     def __init__(self):
         self.head = None
         self.body = None
@@ -115,7 +121,7 @@ class Mammalian:
         self.set_extra()
 
     def set_head(self):
-        head = ['horse head', 'monkey head', 'goat head', 'cat head', 'dog head', 'wolf head', 'ape head', 'deer head','cat head', 'pig snout']
+        head = ['horse head', 'monkey head', 'goat head', 'cat head', 'dog head', 'wolf head', 'ape head', 'deer head','cat head', 'pig snout', 'fox head']
         self.head = head[randint(0, len(head)-1)]
 
     def set_body(self):
@@ -138,12 +144,7 @@ class Mammalian:
             self.locamtion = 'quadrapedal'
 
     def set_limb(self):
-        lengthlimb = ['short', 'long', '', '']
-        leg_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
-        arm_length = lengthlimb[randint(0, len(lengthlimb) - 1)]
-        widthlimb = ['thin', 'thick', '', '']
-        leg_width = widthlimb[randint(0, len(widthlimb) - 1)]
-        arm_width = widthlimb[randint(0, len(widthlimb) - 1)]
+        set_limblengths()
         feet = ['webbed feet', ' clawed feet', 'three toed feet', 'hooved feet', 'two toed feet', 'goat feet', 'dog feet', 'large paws', ' five toed feet']
         feet = feet[randint(0, len(feet) - 1)]
         hands = ['clawed hands', ' webbed hands', 'three toed hands', 'two toed hands', 'tentacle hands', 'clawed paws', 'claws', 'five fingered hands']
@@ -154,7 +155,7 @@ class Mammalian:
             self.limb = 'four %s %s legs with %s'%(leg_length, leg_width, feet)
 
     def set_tail(self):
-        tail = [, 'short', 'prehensile', 'vestigial', 'feline', 'cork screw', 'scaled', 'rat like', 'canine', 'striped', 'barbed']
+        tail = ['short', 'prehensile', 'vestigial', 'feline', 'cork screw', 'scaled', 'rat like', 'canine', 'striped', 'barbed', 'fluffy']
         tail_chance = randint(1,10)
         if tail_chance > 4:
             self.tail = tail[randint(0, len(tail)-1)]
@@ -162,4 +163,68 @@ class Mammalian:
             self.tail = 'no'
 
     def set_extra(self):
-        extra = ['psychically active']
+        extra = ['psionic', 'night vision', 'extreme scent', 'banshee howl', 'venomous', 'regeneration', 'burrows', 'hibernation', 'DNA tasting', 'invisibility', 'teleportation', 'super strength', 'inhuman speed']
+        ifextra = randint(0, 7)
+        if ifextra >= 3:
+            self.extra = extra[randint(0, len(extra) - 1)]
+        else:
+            self.extra = 'no extraordinary ability'
+
+class Avian:
+    def __init__(self):
+        self.head = None
+        self.body = None
+        self.locamotion = None
+        self.limbs = None
+        self.wings = None
+        self.tail = None
+        self.extra = None
+
+        self.set_head()
+        self.set_body()
+        #self.set_locamotion()
+        #self.set_limbs()
+        #self.set_wings()
+        #self.set_extra()
+
+    def set_head(self):
+        head = ['vulture head', 'raven head', 'tucan head', 'chicken head', 'hawk head', 'pelican head', 'penguin head', 'ostrich head',]
+        self.head = head[randint(0, len(head)-1)]
+
+    def set_body(self):
+        color = ['black', 'white', 'speckled blue', 'speckled brown', 'brown', 'red', 'green', 'tan', 'irridescent purple', 'yellow', 'stripped yellow', 'stripped green']
+        body_color = color[randint(0, len(color)-1)]
+        under_color = randint(0,1)
+        wing_color = randint(0, 2)
+        head_color = randint(0,2)
+        if under_color == 0:
+            under_color = body_color
+        else:
+            under_color = color[randint(0, len(color)-1)]
+        if wing_color == 0:
+            wing_color = color[randint(0, len(color)-1)]
+        else:
+            wing_color = body_color
+        if head_color == 0:
+            head_color = color[randint(0, len(color)-1)]
+        else:
+            head_color = body_color
+        self.body = ('%s colored body, %s colored head, %s colored underbelly, and %s colored wings'%(body_color, head_color, under_color, wing_color))
+
+    def set_locamotion(self):
+        locamotion = ['no limbs', '2 limbs', '4 limbs']
+        self.locamotion = locamotion[randint(0,2)]
+
+    def set_limbs(self):
+        set_limblengths()
+        digit_number = randint(3,5)
+        digit_number = str(digit_number)
+        if self.locamotion == 'no limbs':
+            self.limbs = 'None'
+        elif self.locamotion == '2 limbs':
+            self.limbs = '2 %s%s legs with %s toes'%(leg_length, leg_width, digit_number)
+        else:
+           self.limbs = '2 %s%s legs and 2 %s%s arms with %s digits each'%(leg_length, leg_width, arm_legnth, arm_width, digit_number)
+
+mob = Reptile()
+print(mob.limb)
