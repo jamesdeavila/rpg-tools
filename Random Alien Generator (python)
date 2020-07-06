@@ -23,7 +23,8 @@ class Gelatinous:
         self.set_color()
         self.set_extra()
 
-        self.features = [self.type, self.limbnum, self.limbs, self.color, self.extra]
+        self.features = {'type': self.type, 'Number of limbs': self.limbnum, 'Limbs': self.limbs, 'color': self.color, 'special ability': self.extra}
+        #self.features = [self.type, self.limbnum, self.limbs, self.color, self.extra]
     #give a random number of limbs
     def set_limbnum(self):
         self.limbnum = str(randint(1,30))
@@ -31,7 +32,7 @@ class Gelatinous:
     def set_limb(self):
         limb = ['suckered tentacles', 'stinging tentacles', 'human like arms', 'amorphous limbs', 'no limbs']
         self.limbs = limb[randint(0, len(limb)-1)]
-        if self.limb == 'no limbs':
+        if self.limbs == 'no limbs':
             self.limbnum = 0
     #choose a random color
     def set_color(self):
@@ -60,7 +61,9 @@ class Reptile:
         self.set_tail()
         self.set_extra()
 
-        self.features = [self.type, self.head, self.locamotion, self.limb, self.skin, self.tail, self.extra]
+        self.features = {'type': self.type, 'head': self.head, 'body': self.skin, 'locamotion': self.locamotion,
+                         'limbs': self.limb, 'tail': self.tail, 'special ability': self.extra}
+        #self.features = [self.type, self.head, self.locamotion, self.limb, self.skin, self.tail, self.extra]
 
     #generate a random head type
     def set_head(self):
@@ -127,10 +130,13 @@ class Mammal:
         self.set_tail()
         self.set_extra()
 
-        self.features = [self.type, self.body, self.locamotion, self.limb, self.tail, self.extra]
+        #self.features = [self.type, self.body, self.locamotion, self.limb, self.tail, self.extra]
+        self.features = {'type': self.type, 'head': self.head, 'body': self.body, 'locamotion': self.locamotion,
+                         'limbs': self.limb, 'tail': self.tail, 'special ability': self.extra}
 
     def set_head(self):
-        head = ['horse head', 'monkey head', 'goat head', 'cat head', 'dog head', 'wolf head', 'ape head', 'deer head','cat head', 'pig snout', 'fox head']
+        head = ['horse head', 'monkey head', 'goat head', 'cat head', 'dog head', 'wolf head', 'ape head', 'deer head',
+                'cat head', 'pig snout', 'fox head']
         self.head = head[randint(0, len(head)-1)]
 
     def set_body(self):
@@ -150,7 +156,7 @@ class Mammal:
         if locamotion == 0:
             self.locamotion = 'bipedal'
         else:
-            self.locamtion = 'quadrapedal'
+            self.locamotion = 'quadrapedal'
 
     def set_limb(self):
         set_limblengths()
@@ -197,7 +203,7 @@ class Avian:
         #self.set_wings()
         #self.set_extra()
 
-        self.features = [self.type, self.head, self.body, self.locamotion, self.limbs, self.wings, self.tail, self.extra]
+        self.features = {'type': self.type, 'head': self.head, 'body': self.body, 'locamotion': self.locamotion, 'limbs': self.limbs, 'wings': self.wings, 'tail': self.tail, 'special ability': self.extra}
 
     def set_head(self):
         head = ['vulture head', 'raven head', 'tucan head', 'chicken head', 'hawk head', 'pelican head', 'penguin head', 'ostrich head',]
@@ -238,3 +244,24 @@ class Avian:
         else:
            self.limbs = '2 %s%s legs and 2 %s%s arms with %s digits each'%(leg_length, leg_width, arm_legnth, arm_width, digit_number)
 
+    #def set_wings(self):
+
+def set_powers(mob):
+    mob.powers = None
+    if mob.extra == 'psionic':
+        powers = ['lightning bolt', 'mind reading']
+        mob.powers = choice(powers)
+        powers_dic = {'psyhic powers': mob.powers}
+        features_dictionary.update(powers_dic)
+alien = [Gelatinous(), Reptile(), Mammal()]
+alien = choice(alien)
+
+features_dictionary = alien.features
+
+set_powers(alien)
+
+
+
+for i in features_dictionary.keys():
+    print(i, end=': ')
+    print(features_dictionary[i])
