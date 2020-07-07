@@ -1,0 +1,564 @@
+from random import *
+# this program will emulate the 1st edition AD&D random encounter tables in the DMG, and generate the information
+# about the monsters it selects in accordance with the monster manual.
+
+def die(x, y): # defines a 'dice rolling' function in the format of xdy to generate random numbers
+    i = 0
+    roll = 0
+    while i < x:
+        r = randint(1, y)
+        roll = roll + r
+        i = i + 1
+    return roll
+
+
+# defines a function that can be used for any monster to generate its HP, and can be used later independtly
+def set_hp(n):
+    roll = die(n.hd[0], n.hd[1])
+    n.hp = roll
+
+
+# the following classes contain the information for each Monster in Appendix E in the 1st edition AD&D DMG
+class Aerial_servant:
+    def __init__(self):
+        self.size = 'Large - 8 feet tall'
+        self.thaco = 7
+        self.ac = 3
+        self.move = 24
+        self.hd = (16, 8)  # 16d8
+        self.hp = 0
+        self.in_lair_chance = 0
+        self.in_lair = 'no'
+        self.num_attacks = 1
+        self.damage = '8d4'
+        self.special_attacks = 'suprises on 1-4'
+        self.special_defences = 'magic weapons to hit'
+        self.magic_resistance = 'standard'
+        self.intelligence = 'semi-'
+        self.alignment = 'neutral'
+        self.xp = 0
+        self.psionic_ability = None
+
+        set_hp(self)
+        self.set_xp()
+
+
+
+
+    def set_xp(self):
+        xp = 5250 + (20 * self.hp)
+        self.xp = xp
+
+
+# the following functions define the tables in pages 183 to 189 of the 1st edition AD&D DMG as dicts with 100 items.
+# some of the dictionaries have randomization. a function to define the dictionary allows it to be re-randomized
+# between calls.
+
+def arctic_plain_dict():
+    global arctic_plain
+    arctic_plain = {}
+    for key in range(1, 11):
+        arctic_plain[key] = Bear_brown()
+    for key in range(11, 13):
+        arctic_plain[key] = Dragon_white()
+    for key in range(13, 16):
+        arctic_plain[key] = Giant_frost()
+    for key in range(16, 56):
+        arctic_plain[key] = Herd_animal()
+    for key in range(56, 66):
+        arctic_plain[key] = Men_tribesmen()
+    for key in range(66, 71):
+        arctic_plain[key] = Owl_giant()
+    for key in range(71, 73):
+        arctic_plain[key] = Remorhaz()
+    for key in range(73, 75):
+        arctic_plain[key] = Snake_giant_constrictor()
+    for key in range(75, 81):
+        arctic_plain[key] = Toad_ice()
+    for key in range(81, 91):
+        arctic_plain[key] = Wolf()
+    for key in range(91, 96):
+        arctic_plain[key] = Wolf_winter()
+    for key in range(96, 101):
+        arctic_plain[key] = Yeti()
+
+
+def arctic_rough_dict():
+    global arctic_rough
+    arctic_rough = {}
+    for key in range(1, 10):
+        arctic_rough[key] = Bear_brown()
+    for key in range(10, 13):
+        artic_rough[key] = Dragon_white()
+    for key in range(13, 16):
+        arctic_rough[key] = Giant_frost()
+    for key in range(16, 56):
+        arctic_rough[key] = Herd_animal()
+    for key in range(56, 61):
+        arctic_rough[key] = Men_tribesmen()
+    for key in range(61, 71):
+        arctic_rough[key] = Owl_giant()
+    for key in range(71, 76):
+        arctic_rough[key] = Remorhaz()
+    for key in range(76, 81):
+        arctic_rough[key] = Snake_giant_constrictor()
+    for key in range(81, 84):
+        arctic_rough[key] = Toad_ice()
+    for key in range(84, 92):
+        arctic_rough[key] = Wolf()
+    for key in range(92, 96):
+        arctic_rough[key] = Wolf_winter()
+    for key in range(96, 101):
+        arctic_rough[key] = Yeti()
+
+
+def arctic_mountains_dict():
+    global arctic_mountains
+    arctic_mountains = {}
+    for key in range(1, 8):
+        arctic_mountains[key] = Bear_brown()
+    for key in range(8, 16):
+        artic_mountains[key] = Dragon_white()
+    for key in range(16, 21):
+        arctic_mountains[key] = Giant_frost()
+    for key in range(21, 56):
+        arctic_mountains[key] = Herd_animal()
+    for key in range(56, 61):
+        arctic_mountains[key] = Men_tribesmen()
+    for key in range(61, 71):
+        arctic_mountains[key] = Owl_giant()
+    for key in range(71, 73):
+        arctic_mountains[key] = Remorhaz()
+    for key in range(73, 76):
+        arctic_mountains[key] = Snake_giant_constrictor()
+    for key in range(76, 81):
+        arctic_mountains[key] = Toad_ice()
+    for key in range(81, 87):
+        arctic_mountains[key] = Wolf()
+    for key in range(87, 91):
+        arctic_mountains[key] = Wolf_winter()
+    for key in range(91, 101):
+        arctic_mountains[key] = Yeti()
+
+
+def sub_arctic_plain_dict():
+    global sub_arctic_plain
+    sub_arctic_plain = {}
+    for key in range(1, 6):
+        sub_arctic_plain[key] = Dragon_white()
+    for key in range(6, 11):
+        sub_arctic_plain[key] = Giant_frost()
+    for key in range(11, 16):
+        sub_arctic_plain[key] = Gnoll()
+    for key in range(16, 41):
+        sub_arctic_plain[key] = Herd_animal()
+    for key in range(41, 46):
+        sub_arctic_plain[key] = Mammoth()
+    for key in range(46, 56):
+        sub_arctic_plain[key] = Mastadon()
+    for key in range(56, 66):
+        sub_arctic_plain[key] = Men_tribesmen()
+    for key in range(66, 71):
+        sub_arctic_plain[key] = Owl_giant()
+    for key in range(71, 81):
+        sub_arctic_plain[key] = Rhino_woolly()
+    for key in range(81, 91):
+        sub_arctic_plain[key] = Tiger()
+    for key in range(91, 101):
+        sub_arctic_plain[key] = Wolf()
+
+
+def sub_arctic_scrub_dict():
+    global sub_arctic_scrub
+    sub_arctic_scrub = {}
+    for key in range(1, 6):
+        sub_arctic_scrub[key] = Bear_brown()
+    for key in range(6, 11):
+        sub_arctic_scrub[key] = Dragon_white()
+    for key in range(11, 16):
+        sub_arctic_scrub[key] = Giant_frost()
+    for key in range(16, 21):
+        sub_arctic_scrub[key] = Gnoll()
+    for key in range(21, 41):
+        sub_arctic_scrub[key] = Herd_animal()
+    for key in range(41, 51):
+        sub_arctic_scrub[key] = Mammoth()
+    for key in range(51, 56):
+        sub_arctic_scrub[key] = Mastadon()
+    for key in range(56, 66):
+        sub_arctic_scrub[key] = Men_tribesmen()
+    for key in range(66, 71):
+        sub_arctic_scrub[key] = Owl_giant()
+    for key in range(71, 81):
+        sub_arctic_scrub[key] = Rhino_woolly()
+    for key in range(81, 91):
+        sub_arctic_scrub[key] = Tiger()
+    for key in range(91, 101):
+        sub_arctic_scrub[key] = Wolf()
+
+
+def sub_arctic_forest_dict():
+    global sub_arctic_forest
+    sub_arctic_forest = {}
+    for key in range(1, 11):
+        sub_arctic_forest[key] = Bear_brown()
+    for key in range(11, 16):
+        sub_arctic_forest[key] = Bear_cave()
+    for key in range(16, 21):
+        sub_arctic_forest[key] = Giant_frost()
+    for key in range(21, 26):
+        sub_arctic_forest[key] = Gnoll()
+    for key in range(26, 28):
+        sub_arctic_forest[key] = Hell_hound()
+    for key in range(28, 39):
+        sub_arctic_forest[key] = Herd_animal()
+    for key in range(39, 46):
+        sub_arctic_forest[key] = Lynx_giant()
+    for key in range(46, 51):
+        sub_arctic_forest[key] = Mammoth
+    for key in range(51, 56):
+        sub_arctic_forest[key] = Mastadon()
+    for key in range(56, 66):
+        sub_arctic_forest[key] = Men_tribesmen()
+    for key in range(66, 71):
+        sub_arctic_forest[key] = Owl_giant()
+    for key in range(71, 76):
+        sub_arctic_forest[key] = Rat_giant()
+    for key in range(76, 81):
+        sub_arctic_forest[key] = Tiger()
+    for key in range(81, 86):
+        sub_arctic_forest[key] = Troll()
+    for key in range(86, 96):
+        sub_arctic_forest[key] = Wolf()
+    for key in range(96, 99):
+        sub_arctic_forest[key] = Wolverine()
+    for key in range(99, 101):
+        sub_arctic_forest[key] = Wolverine_giant()
+
+
+def sub_arctic_rough_dict():
+    global sub_arctic_rough
+    sub_arctic_rough = {}
+    for key in range(1, 6):
+        sub_arctic_rough[key] = Bear_brown()
+    for key in range(6, 11):
+        sub_arctic_rough[key] = Bear_cave()
+    for key in range(11, 16):
+        sub_arctic_rough[key] = Dragon_white()
+    for key in range(16, 21):
+        sub_arctic_rough[key] = Giant_frost()
+    for key in range(21, 26):
+        sub_arctic_rough[key] = Gnoll()
+    for key in range(26, 28):
+        sub_arctic_rough[key] = Hell_hound()
+    for key in range(28, 41):
+        sub_arctic_rough[key] = Herd_animal()
+    for key in range(41, 51):
+        sub_arctic_rough[key] = Men_tribesmen()
+    for key in range(51, 56):
+        sub_arctic_rough[key] = Owl_giant()
+    for key in range(56, 61):
+        sub_arctic_rough[key] = Ram_giant()
+    for key in range(61, 66):
+        sub_arctic_rough[key] = Rat_giant()
+    for key in range(66, 68):
+        sub_arctic_rough[key] = Remorhaz()
+    for key in range(68, 76):
+        sub_arctic_rough[key] = Tiger()
+    for key in range(76, 81):
+        sub_arctic_rough[key] = Troll()
+    for key in range(81, 91):
+        sub_arctic_rough[key] = Wolf()
+    for key in range(91, 97):
+        sub_arctic_rough[key] = Wolverine()
+    for key in range(97, 99):
+        sub_arctic_rough[key] = Wolverine_giant()
+    for key in range(99, 101):
+        sub_arctic_rough[key] = Yeti()
+
+
+def sub_arctic_hills_dict():
+    global sub_arctic_hills
+    sub_arctic_hills = {}
+    for key in range(1, 6):
+        sub_arctic_hills[key] = Bear_brown()
+    for key in range(6, 11):
+        sub_arctic_hills[key] = Bear_cave()
+    for key in range(11, 16):
+        sub_arctic_hills[key] = Dragon_white()
+    for key in range(16, 21):
+        sub_arctic_hills[key] = Giant_frost()
+    for key in range(21, 26):
+        sub_arctic_hills[key] = Gnoll()
+    for key in range(26, 28):
+        sub_arctic_hills[key] = Hell_hound()
+    for key in range(28, 51):
+        sub_arctic_hills[key] = Herd_animal()
+    for key in range(51, 61):
+        sub_arctic_hills[key] = Men_tribesmen()
+    for key in range(61, 66):
+        sub_arctic_hills[key] = Owl_giant()
+    for key in range(66, 71):
+        sub_arctic_hills[key] = Ram_giant()
+    for key in range(71, 76):
+        sub_arctic_hills[key] = Rhino_woolly()
+    for key in range(76, 81):
+        sub_arctic_hills[key] = Tiger()
+    for key in range(81, 86):
+        sub_arctic_hills[key] = Troll()
+    for key in range(86, 93):
+        sub_arctic_hills[key] = Wolf()
+    for key in range(93, 95):
+        sub_arctic_hills[key] = Wolf_winter()
+    for key in range(95, 97):
+        sub_arctic_hills[key] = Wolverine()
+    for key in range(97, 99):
+        sub_arctic_hills[key] = Wolverine_giant()
+    for key in range(99, 101):
+        sub_arctic_hills[key] = Yeti()
+
+
+def sub_arctic_mountains_dict():
+    global sub_arctic_mountains
+    sub_arctic_mountains = {}
+    for key in range(1, 16):
+        sub_arctic_mountains[key] = Bear_cave()
+    for key in range(16, 26):
+        sub_arctic_mountains[key] = Dragon_white()
+    for key in range(26, 31):
+        sub_arctic_mountains[key] = Giant_frost()
+    for key in range(31, 36):
+        sub_arctic_mountains[key] = Gnoll()
+    for key in range(36, 41):
+        sub_arctic_mountains[key] = Hell_hound()
+    for key in range(41, 61):
+        sub_arctic_mountains[key] = Herd_animal()
+    for key in range(61, 66):
+        sub_arctic_mountains[key] = Owl_giant()
+    for key in range(66, 71):
+        sub_arctic_mountains[key] = Ram_giant()
+    for key in range(71, 76):
+        sub_arctic_mountains[key] = Remorhaz()
+    for key in range(76, 86):
+        sub_arctic_mountains[key] = Troll()
+    for key in range(86, 93):
+        sub_arctic_mountains[key] = Wolf()
+    for key in range(93, 96):
+        sub_arctic_mountains[key] = Wolf_winter()
+    for key in range(96, 101):
+        sub_arctic_mountains[key] = Yeti()
+
+
+def sub_arctic_marsh_dict():
+    global sub_arctic_marsh
+    sub_arctic_marsh = {}
+    for key in range(1, 6):
+        sub_arctic_marsh[key] = Dragon_white()
+    for key in range(6, 21):
+        sub_arctic_marsh[key] = Gnoll()
+    for key in range(21, 51):
+        sub_arctic_marsh[key] = Herd_animal()
+    for key in range(51, 56):
+        sub_arctic_marsh[key] = Mastadon()
+    for key in range(56, 66):
+        sub_arctic_marsh[key] = Men_tribesmen()
+    for key in range(66, 76):
+        sub_arctic_marsh[key] = Owl_giant()
+    for key in range(76, 86):
+        sub_arctic_marsh[key] = Rat_giant()
+    for key in range(86, 91):
+        sub_arctic_marsh[key] = Toad_ice()
+    for key in range(91, 101):
+        sub_arctic_marsh[key] = Troll()
+
+
+def temperate_wilderness_plain_dict():
+    global temperate_wilderness_plain
+    temperate_wilderness_plain = {}
+
+    demihuman_plain = {}  # subtable for demihumans
+    for demihuman in range(1, 6):
+        deminhuman_plain[demihuman] = Dwarf()
+    for demihuman in range(6, 71):
+        demihuman_plain[demihuman] = Elf()
+    for demihuman in range(71, 81):
+        demihuman_plain[demihuman] = Gnome()
+    for demihuman in range(81, 101):
+        demihuman_plain[demihuman] = Halfling()
+
+    dragon_plain = {}  # dragon subtable
+    for dragon in range(1, 3):
+        dragon_plain[dragon] = Dragon_black()
+    for dragon in range(3, 5):
+        dragon_plain[dragon] = Dragon_blue()
+    for dragon in range(5, 7):
+        dragon_plain[dragon] = Dragon_brass()
+    for dragon in range(7, 9):
+        dragon_plain[dragon] = Dragon_bronze()
+    for dragon in range(9, 11):
+        dragon_plain[dragon] = Chimera()
+    for dragon in range(11, 13):
+        dragon_plain[dragon] = Dragon_copper()
+    for dragon in range(13, 29):
+        dragon_plain[dragon] = Dragon_gold()
+    for dragon in range(29, 31):
+        dragon_plain[dragon] = Dragon_green()
+    for dragon in range(31, 33):
+        dragon_plain[dragon] = Dragon_red()
+    for dragon in range(33, 35):
+        dragon_plain[dragon] = Dragon_white()
+
+    giant_plain = {} # giant subtable
+    for giant in range(1, 3):
+        giant_plain[giant] = Giant_cloud()
+    for giant in range(3, 5):
+        giant_plain[giant] = Ettin()
+    for giant in range(5, 7):
+        giant_plain[giant] = Giant_fire()
+    for giant in range(7, 9):
+        giant_plain[giant] = Giant_frost()
+    for giant in range(9, 96):
+        giant_plain[giant] = Giant_hill()
+    for giant in range(96, 99):
+        giant_plain[giant] = Giant_stone()
+    for giant in range(99, 100):
+        giant_plain[giant] = Giant_storm()
+    for giant in range(100, 101):
+        giant_plain[giant] = Titan()
+
+    humanoid_plain = {} # humanoid subtable
+    for humanoid in range(1, 6):
+        humanoid_plain = Gnoll()
+    for humanoid in range(6, 11):
+        humanoid_plain = Goblin()
+    for humanoid in range(11, 16):
+        humanoid_plain = Hobgoblin()
+    for humanoid in range(16, 101):
+        humanoid_plain = Orc()
+
+    lycanthrope_plain = {} # lycanthrope subtable
+    for lycanthrope in range(1,3):
+        lycanthrope_plain[lycanthrope] = Werebear()
+    for lycanthrope in range(3, 26):
+        lycanthrope_plain[lycanthrope] = Wereboar()
+    for lycanthrope in range(26, 31):
+        lycanthrope_plain[lycanthrope] = Wererat()
+    for lycanthrope in range(31, 41):
+        lycanthrope_plain[lycanthrope] = Weretiger()
+    for lycanthrope in range(41, 101):
+        lycanthrope_plain[lycanthrope] = Werewolf()
+
+    men_plain = {}
+    for men in range(1, 6):
+        men_plain[men] = Men_bandit()
+    for men in range(6, 8):
+        men_plain[men] = Men_berserker()
+    for men in range(8, 11):
+        men_plain[men] = Men_brigand()
+    for men in range(11, 21):
+        men_plain[men] = Character()
+    for men in range(21, 23):
+        men_plain[men] = Men_dervish()
+    for men in range(23, 61):
+        men_plain[men] = Men_merchant()
+    for men in range(61, 91):
+        men_plain[men] = Men_nomad()
+    for men in range(91, 96):
+        men_plain[men] = Men_pilgrim()
+    for men in range(96, 101):
+        men_plain[men] = Men_tribesmen()
+
+    snake_plain = {}
+    for snake in range(1, 11):
+        snake_plain[snake] = Snake_amphsibaena()
+    for snake in range(11, 81):
+        snake_plain[snake] = Snake_poisonous()
+    for snake in range(81, 101):
+        snake_plain[snake] = Snake_spitting()
+
+    spider_plain = {}
+    for spider in range(1, 16):
+        spider_plain[spider] = Spider_huge()
+    for spider in range(16, 101):
+        spider_plain[spider] = Spider_large()
+
+    for key in range(1, 2):
+        temperate_wilderness_plain[key] = Ant_giant()
+    for key in range(2, 3):
+        temperate_wilderness_plain[key] = Bear_brown()
+    for key in range(3, 4):
+        temperate_wilderness_plain[key] = Blink_dog()
+    for key in range(4, 5):
+        temperate_wilderness_plain[key] = Boar_wild()
+    for key in range(5, 6):
+        temperate_wilderness_plain[key] = Bugbear()
+    for key in range(6, 10):
+        temperate_wilderness_plain[key] = Bull_cattle_wild()
+    for key in range(10, 11):
+        temperate_wilderness_plain[key] = demihuman_plain[randint(1, 100)]
+    for key in range(11,13):
+        temperate_wilderness_plain[key] = Dog_wild()
+    for key in range(13, 15):
+        temperate_wilderness_plain[key] = dragon_plain[randint(1,100)]
+    for key in range(15, 16):
+        temperate_wilderness_plain[key] = Eagle_giant()
+    for key in range(16, 19):
+        temperate_wilderness_plain[key] = giant_plain[randint(1,100)]
+    for key in range(19, 20):
+        temperate_wilderness_plain[key] = Griffon()
+    for key in range(20, 26):
+        temperate_wilderness_plain[key] = Herd_animal()
+    for key in range(26, 28):
+        temperate_wilderness_plain[key] = Hippogriff()
+    for key in range(28, 31):
+        temperate_wilderness_plain[key] = Horse_wild()
+    for key in range(31, 34):
+        temperate_wilderness_plain[key] = humanoid_plain[randint(1, 100)]
+    for key in range(34, 39):
+        chance = randint(1,10)
+        if chance == 10:
+            temperate_wilderness_plain[key] = Jackalwere()
+        else:
+            temperate_wilderness_plain[key] = Jackal()
+    for key in range(39, 40):
+        chance = randint(1,3)
+        if chance == 1:
+            temperate_wilderness_plain[key] = Kirin()
+        elif chance == 2:
+            temperate_wilderness_plain[key] = Lammasu()
+        else:
+            temperate_wilderness_plain[key] = Shedu()
+    for key in range(40, 50):
+        temperate_wilderness_plain[key] = Lion()
+    for key in range(50, 51):
+        temperate_wilderness_plain[key] = lycanthrope_plain[randint(1,100)]
+    for key in range(51, 71):
+        temperate_wilderness_plain[key] = men_plain[randint(1,100)]
+    for key in range(71, 75):
+        chance = randint(1,10)
+        if chance == 10:
+            temperate_wilderness_plain = Ogre_magi()
+        else:
+            temperate_wilderness_plain[key] = Ogre()
+    for key in range(75, 76):
+        temperate_wilderness_plain[key] = Owl_giant()
+    for key in range(76, 78):
+        temperate_wilderness_plain[key] = Pegasus()
+    for key in range(78, 79):
+        temperate_wilderness_plain[key] = snake_plain[randint(1,100)]
+    for key in range(79, 81):
+        temperate_wilderness_plain[key] = spider_plain[randint(1,100)]
+    for key in range(81, 82):
+        temperate_wilderness_plain[key] = Stag()
+    for key in range(82, 83):
+        temperate_wilderness_plain[key] = Toad_giant()
+    for key in range(83, 85):
+        temperate_wilderness_plain[key] = Troll()
+    for key in range(85, 87):
+        temperate_wilderness_plain[key] = Wasp_giant()
+    for key in range(87, 88):
+        temperate_wilderness_plain[key] = Weasel_giant()
+    for key in range(88, 98):
+        temperate_wilderness_plain[key] = Wolf()
+    for key in range(98,101):
+        temperate_wilderness_plain[key] = Wolf_worg()
